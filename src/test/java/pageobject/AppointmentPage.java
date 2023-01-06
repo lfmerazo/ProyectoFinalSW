@@ -48,6 +48,8 @@ public class AppointmentPage extends PageObject {
         element(healthcareProgramElement).waitUntilVisible();
         SelectOptions.in(listHealthcareProgram, "Medicaid");
 
+        hospitalReadmissionCheck.click();
+
         /* DOS FORMAS DE SELECCIONAR LA FECHA */
 
         // --- 1) Ingresando la fecha de manera directa
