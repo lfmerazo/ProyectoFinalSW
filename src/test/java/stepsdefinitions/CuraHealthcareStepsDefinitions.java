@@ -36,13 +36,13 @@ public class CuraHealthcareStepsDefinitions {
         login.validarLoginExitoso();
     }
 
-    @And("^diligencio la solicitud de cita$")
-    public void diligencioLaSolicitudDeCita() throws InterruptedException {
-        appointment.diligenciarCita();
+    @And("^diligencio la solicitud de cita (.*), (.*), (.*), (.*) y (.*)$")
+    public void diligencioLaSolicitudDeCita(String facility, boolean readmission, String Healthcare, String visitDate, String comment) throws InterruptedException {
+        appointment.diligenciarCita(facility, readmission, Healthcare, visitDate, comment);
     }
 
-    @Then("^se agenda la cita de manera exitosa$")
-    public void seAgendaLaCitaDeManeraExitosa() throws InterruptedException {
+    @Then("^se agenda la cita de manera exitosa con los datos registrados$")
+    public void seAgendaLaCitaDeManeraExitosaConLosDatosRegistrados() throws InterruptedException {
         appointment.validarappointmentExitoso();
     }
 

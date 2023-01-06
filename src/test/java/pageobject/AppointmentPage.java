@@ -41,25 +41,29 @@ public class AppointmentPage extends PageObject {
     @FindBy(xpath = "//div[@class = 'datepicker-days']/table/tbody/tr/td[@class='day'][6]")
     public WebElementFacade dayCalendarBtn;
 
-    public void diligenciarCita() throws InterruptedException {
+    public void diligenciarCita(String facility, boolean readmission, String Healthcare, String visitDate, String comment) throws InterruptedException {
 
-        seleccionarFacility("Hongkong CURA Healthcare Center");
+        seleccionarFacility(facility);
 
         element(healthcareProgramElement).waitUntilVisible();
         SelectOptions.in(listHealthcareProgram, "Medicaid");
 
-        hospitalReadmissionCheck.click();
+        if (readmission == true) {
+            hospitalReadmissionCheck.click();
+        }
 
         /* DOS FORMAS DE SELECCIONAR LA FECHA */
 
         // --- 1) Ingresando la fecha de manera directa
-        //visitDateTxt.type("05/01/2022");
+        visitDateTxt.type(visitDate);
 
         // --- 2) Dando clic sobre los elementos del calendario
-        calendarBtn.click();
-        dayCalendarBtn.click();
+        /*
+            calendarBtn.click();
+            dayCalendarBtn.click();
+        */
 
-        commentTxt.type("Remisión de prueba QA");
+        commentTxt.type(comment);
 
         appointmentBtn.click();
     }
