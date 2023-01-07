@@ -37,13 +37,13 @@ public class CuraHealthcareStepsDefinitions {
     }
 
     @And("^diligencio la solicitud de cita (.*), (.*), (.*), (.*) y (.*)$")
-    public void diligencioLaSolicitudDeCita(String facility, boolean readmission, String Healthcare, String visitDate, String comment) throws InterruptedException {
-        appointment.diligenciarCita(facility, readmission, Healthcare, visitDate, comment);
+    public void diligencioLaSolicitudDeCita(String facility, String readmission, String programHealthcare, String visitDate, String comment) throws InterruptedException {
+        appointment.diligenciarFormCita(facility, readmission, programHealthcare, visitDate, comment);
     }
 
-    @Then("^se agenda la cita de manera exitosa con los datos registrados$")
-    public void seAgendaLaCitaDeManeraExitosaConLosDatosRegistrados() throws InterruptedException {
-        appointment.validarappointmentExitoso();
+    @Then("^se agenda la cita de manera exitosa con los datos registrados (.*), (.*), (.*), (.*) y (.*)$")
+    public void seAgendaLaCitaDeManeraExitosaConLosDatosRegistrados(String facility, String readmission, String programHealthcare, String visitDate, String comment) throws InterruptedException {
+        appointment.validarappointmentExitoso(facility, readmission, programHealthcare, visitDate, comment);
     }
 
     @When("^ingreso el usuario (.*) y contrasenia (.*) incorrectos$")

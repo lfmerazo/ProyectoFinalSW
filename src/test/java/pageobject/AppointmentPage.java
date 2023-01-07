@@ -41,14 +41,27 @@ public class AppointmentPage extends PageObject {
     @FindBy(xpath = "//div[@class = 'datepicker-days']/table/tbody/tr/td[@class='day'][6]")
     public WebElementFacade dayCalendarBtn;
 
-    public void diligenciarCita(String facility, boolean readmission, String Healthcare, String visitDate, String comment) throws InterruptedException {
+    //campos resumen cita
+    @FindBy(id = "facility")
+    public WebElementFacade facilityLbl;
+    @FindBy(id = "hospital_readmission")
+    public WebElementFacade hospitalReadmissionLbl;
+    @FindBy(id = "program")
+    public WebElementFacade programLbl;
+    @FindBy(id = "visit_date")
+    public WebElementFacade visitDateLbl;
+    @FindBy(id = "comment")
+    public WebElementFacade commentLbl;
+
+
+    public void diligenciarFormCita(String facility, String readmission, String programHealthcare, String visitDate, String comment) throws InterruptedException {
 
         seleccionarFacility(facility);
 
         element(healthcareProgramElement).waitUntilVisible();
-        SelectOptions.in(listHealthcareProgram, "Medicaid");
+        SelectOptions.in(listHealthcareProgram, programHealthcare);
 
-        if (readmission == true) {
+        if (readmission.equals("Yes")) {
             hospitalReadmissionCheck.click();
         }
 
@@ -79,8 +92,14 @@ public class AppointmentPage extends PageObject {
         }
     }
 
-    public void validarappointmentExitoso() throws InterruptedException {
+    public void validarappointmentExitoso(String facility, String readmission, String programHealthcare, String visitDate, String comment) throws InterruptedException {
         Thread.sleep(5000);
-        Assert.assertEquals(appointmentConfirmationLbl.getText(), "Appointment Confirmation");
+        element(appointmentConfirmationLbl).waitUntilVisible();
+
+        Assert.assertEquals(facilityLbl.getText(), facility);
+        Assert.assertEquals(hospitalReadmissionLbl.getText(), readmission);
+        Assert.assertEquals(programLbl.getText(), programHealthcare);
+        Assert.assertEquals(visitDateLbl.getText(), visitDate);
+        Assert.assertEquals(commentLbl.getText(), comment);
     }
 }
