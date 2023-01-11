@@ -41,25 +41,42 @@ public class AppointmentPage extends PageObject {
     @FindBy(xpath = "//div[@class = 'datepicker-days']/table/tbody/tr/td[@class='day'][6]")
     public WebElementFacade dayCalendarBtn;
 
-    public void diligenciarCita() throws InterruptedException {
+    //campos resumen cita
+    @FindBy(id = "facility")
+    public WebElementFacade facilityLbl;
+    @FindBy(id = "hospital_readmission")
+    public WebElementFacade hospitalReadmissionLbl;
+    @FindBy(id = "program")
+    public WebElementFacade programLbl;
+    @FindBy(id = "visit_date")
+    public WebElementFacade visitDateLbl;
+    @FindBy(id = "comment")
+    public WebElementFacade commentLbl;
 
-        seleccionarFacility("Hongkong CURA Healthcare Center");
+
+    public void diligenciarFormCita(String facility, String readmission, String programHealthcare, String visitDate, String comment) throws InterruptedException {
+
+        seleccionarFacility(facility);
 
         element(healthcareProgramElement).waitUntilVisible();
-        SelectOptions.in(listHealthcareProgram, "Medicaid");
+        SelectOptions.in(listHealthcareProgram, programHealthcare);
 
-        hospitalReadmissionCheck.click();
+        if (readmission.equals("Yes")) {
+            hospitalReadmissionCheck.click();
+        }
 
         /* DOS FORMAS DE SELECCIONAR LA FECHA */
 
         // --- 1) Ingresando la fecha de manera directa
-        //visitDateTxt.type("05/01/2022");
+        visitDateTxt.type(visitDate);
 
         // --- 2) Dando clic sobre los elementos del calendario
-        calendarBtn.click();
-        dayCalendarBtn.click();
+        /*
+            calendarBtn.click();
+            dayCalendarBtn.click();
+        */
 
-        commentTxt.type("Remisión de prueba QA");
+        commentTxt.type(comment);
 
         appointmentBtn.click();
     }
@@ -75,8 +92,14 @@ public class AppointmentPage extends PageObject {
         }
     }
 
-    public void validarappointmentExitoso() throws InterruptedException {
+    public void validarappointmentExitoso(String facility, String readmission, String programHealthcare, String visitDate, String comment) throws InterruptedException {
         Thread.sleep(5000);
-        Assert.assertEquals(appointmentConfirmationLbl.getText(), "Appointment Confirmation");
+        element(appointmentConfirmationLbl).waitUntilVisible();
+
+        Assert.assertEquals(facilityLbl.getText(), facility);
+        Assert.assertEquals(hospitalReadmissionLbl.getText(), readmission);
+        Assert.assertEquals(programLbl.getText(), programHealthcare);
+        Assert.assertEquals(visitDateLbl.getText(), visitDate);
+        Assert.assertEquals(commentLbl.getText(), comment);
     }
 }

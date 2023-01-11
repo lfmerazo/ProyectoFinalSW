@@ -13,14 +13,14 @@ Feature: Funcionalidades en CuraHealtCare
         |username |password          |
         |John Doe |ThisIsNotAPassword|
 
-    @solicitud-exitosa
+    @cita-exitosa
     Scenario Outline: Validar que se agende mi cita
       When ingreso el usuario <username> y contrasenia <password> correctos
-      And diligencio la solicitud de cita
-      Then se agenda la cita de manera exitosa
+      And diligencio la solicitud de cita <facility>, <readmision>, <Healthcare>, <visitDate> y <comment>
+      Then se agenda la cita de manera exitosa con los datos registrados <facility>, <readmision>, <Healthcare>, <visitDate> y <comment>
       Examples: [HAPPY PATH]
-        |username |password          |
-        |John Doe |ThisIsNotAPassword|
+        |username |password          |facility                        |readmision |Healthcare |visitDate  |comment                    |
+        |John Doe |ThisIsNotAPassword|Hongkong CURA Healthcare Center |Yes        |Medicaid   |11/01/2022 |cita médica taller final QA|
 
     @login-no-exitoso
     Scenario Outline: Validar que no inicie sesión
